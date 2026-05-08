@@ -117,16 +117,16 @@ include __DIR__ . '/header.php';
     <section class="contact-section" id="kontakt">
         <div class="container">
             <div class="contact-simple">
-                <h2 class="section__title section__title--center">Skontaktuj <span class="section__title-accent">się z nami</span></h2>
-                <p class="contact-simple__sub">Odpowiadamy w ciągu 24 godzin w dni robocze.</p>
+                <h2 class="section__title section__title--center"><?= htmlspecialchars($s['contact_title'] ?? 'Skontaktuj się z nami') ?></h2>
+                <p class="contact-simple__sub"><?= htmlspecialchars($s['contact_sub'] ?? 'Odpowiadamy w ciągu 24 godzin w dni robocze.') ?></p>
                 <a href="mailto:<?= CONTACT_EMAIL ?>" class="contact-simple__email">
                     <span class="contact-simple__email-icon"><i class="fas fa-envelope"></i></span>
                     <span><?= CONTACT_EMAIL ?></span>
                 </a>
                 <div class="contact-simple__features">
-                    <div><i class="fas fa-check-circle"></i> Szybka odpowiedź</div>
-                    <div><i class="fas fa-check-circle"></i> Indywidualna wycena</div>
-                    <div><i class="fas fa-check-circle"></i> Zgodność z UOKiK</div>
+                    <div><i class="fas fa-check-circle"></i> <?= htmlspecialchars($s['contact_feat_1'] ?? 'Szybka odpowiedź') ?></div>
+                    <div><i class="fas fa-check-circle"></i> <?= htmlspecialchars($s['contact_feat_2'] ?? 'Indywidualna wycena') ?></div>
+                    <div><i class="fas fa-check-circle"></i> <?= htmlspecialchars($s['contact_feat_3'] ?? 'Zgodność z UOKiK') ?></div>
                 </div>
             </div>
         </div>
