@@ -6,7 +6,7 @@ $post_url  = SITE_URL . '/artykul/' . rawurlencode($post['slug']) . '/';
 $cat_url   = SITE_URL . '/kategoria/' . $cat_slug . '/';
 $rtime     = reading_time($post['content'] ?? $post['excerpt'] ?? '');
 ?>
-<article class="post-card">
+<article class="post-card <?= ($post['is_promoted'] ?? 0) ? 'post-card--promoted' : '' ?>">
     <a href="<?= $post_url ?>" class="post-card__img-wrap" tabindex="-1" aria-hidden="true">
         <?php if (!empty($post['featured_image'])): ?>
         <img src="<?= htmlspecialchars(fix_image_url($post['featured_image'])) ?>"
@@ -22,9 +22,17 @@ $rtime     = reading_time($post['content'] ?? $post['excerpt'] ?? '');
             <i class="fas <?= $cat_icon ?>" aria-hidden="true"></i>
             <?= htmlspecialchars($post['category_name'] ?? '') ?>
         </span>
+        <?php if (($post['is_sponsored'] ?? 0)): ?>
+        <span class="post-card__sponsored-badge">
+            <i class="fas fa-certificate"></i> Sponsorowany
+        </span>
+        <?php endif; ?>
     </a>
     <div class="post-card__body">
         <h2 class="post-card__title">
+            <?php if (($post['is_promoted'] ?? 0)): ?>
+                <i class="fas fa-star" style="color:var(--color-gold); font-size:0.85rem;" title="Polecany"></i>
+            <?php endif; ?>
             <a href="<?= $post_url ?>"><?= htmlspecialchars($post['title']) ?></a>
         </h2>
         <p class="post-card__excerpt"><?= htmlspecialchars(truncate($post['excerpt'] ?? '', 120)) ?></p>

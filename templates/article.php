@@ -92,6 +92,9 @@ include __DIR__ . '/header.php';
                 </span>
                 <?php endif; ?>
                 <h1 class="article__title" itemprop="headline">
+                    <?php if (($post['is_promoted'] ?? 0)): ?>
+                        <i class="fas fa-star" style="color:var(--color-gold); font-size:1.2rem; vertical-align: middle; margin-right: 8px;" title="Polecany"></i>
+                    <?php endif; ?>
                     <?= htmlspecialchars($post['title']) ?>
                 </h1>
                 <div class="article__meta">
@@ -126,9 +129,9 @@ include __DIR__ . '/header.php';
             <div class="article-content" id="articleContent" itemprop="articleBody">
                 <?= $post['content'] ?>
                 <?php if (!empty($post['ai_note_enabled'])): ?>
-                <div class="ai-note" style="margin-top:2rem; padding:1.25rem; background:#f8fafc; border:1px solid #e2e8f0; border-radius:12px; display:flex; gap:12px; font-size:0.875rem; color:#475569;">
-                    <div style="color:var(--color-primary); font-size:1.25rem;"><i class="fas fa-robot"></i></div>
-                    <div>
+                <div class="ai-note">
+                    <div class="ai-note__icon"><i class="fas fa-robot"></i></div>
+                    <div class="ai-note__body">
                         <strong>Wsparcie AI.</strong> <?= $post['ai_note_text'] ?: 'Ten materiał został opracowany przy wsparciu narzędzi sztucznej inteligencji, a następnie zweryfikowany i zatwierdzony przez redakcję '.SITE_NAME.'.' ?>
                     </div>
                 </div>

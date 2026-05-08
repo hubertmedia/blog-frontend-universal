@@ -139,7 +139,7 @@ include __DIR__ . '/header.php';
 <?php endif; ?>
 
 <!-- Polecane Artykuły (Z CMS: ?featured=1) -->
-<?php $featured_api = fetch_featured_posts(4); ?>
+<?php $featured_api = fetch_featured_posts(3); ?>
 <?php if (!empty($featured_api)): ?>
 <section class="section section--featured-alt" aria-labelledby="featured-alt-h" style="background:#f8fafc; border-bottom:1px solid #e2e8f0;">
     <div class="container">
@@ -149,7 +149,7 @@ include __DIR__ . '/header.php';
             </h2>
             <p style="color:var(--color-text-muted); font-size:0.875rem;">Wyselekcjonowane treści przez naszą redakcję</p>
         </div>
-        <div class="posts-grid posts-grid--4">
+        <div class="posts-grid posts-grid--3">
             <?php foreach ($featured_api as $post): ?>
             <?php include __DIR__ . '/partials/post-card.php'; ?>
             <?php endforeach; ?>
@@ -163,7 +163,7 @@ include __DIR__ . '/header.php';
     <div class="container">
         <div class="section__header">
             <h2 class="section__title" id="latest-h">
-                Najnowsze <span class="section__title-accent">analizy</span>
+                Najnowsze <span class="section__title-accent">artykuły</span>
             </h2>
         </div>
         <div class="posts-layout">
