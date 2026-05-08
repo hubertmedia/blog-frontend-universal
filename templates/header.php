@@ -48,10 +48,6 @@ $nav_cats      = get_nav_categories();
         <!-- Top bar -->
         <div class="header__topbar">
             <div class="container header__topbar-inner">
-                <span class="header__topbar-brand">
-                    <i class="fas fa-chart-line" aria-hidden="true"></i>
-                    Niezależny serwis finansowy
-                </span>
                 <div class="header__topbar-links">
                     <a href="<?= SITE_URL ?>/wspolpraca/">Reklama</a>
                     <a href="<?= SITE_URL ?>/polityka-prywatnosci/">Prywatność</a>
