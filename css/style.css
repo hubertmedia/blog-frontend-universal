@@ -607,7 +607,17 @@ input, textarea, select { font: inherit; }
 .ad-slot--leaderboard { min-height: 90px; max-width: 728px; margin-inline: auto; }
 .ad-slot--sidebar { min-height: 250px; width: 100%; }
 .ad-slot--article-top, .ad-slot--article-bottom, .ad-slot--article-mid { min-height: 0; margin-block: 2rem; }
-.ad-slot:not(:empty) { min-height: 90px; }
+
+/* Placeholder styling when slot has label but no content */
+.ad-slot[aria-hidden="true"] {
+  border: 2px dashed var(--color-border);
+  background: rgba(0,0,0,0.02);
+  min-height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.ad-slot--sidebar[aria-hidden="true"] { min-height: 250px; }
 
 /* ── Sidebar ──────────────────────────────────────────────── */
 .sidebar { display: flex; flex-direction: column; gap: 1.5rem; }
