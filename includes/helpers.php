@@ -140,7 +140,7 @@ function render_ad_slot(string $slot_id, string $css_class = '', ?array $ad_slot
     }
 
     $cls = 'ad-slot' . ($css_class ? ' ' . $css_class : '') . ' ad-slot--' . preg_replace('/[^a-z0-9-]/', '-', $slot_id);
-    $label = '<span class="ad-slot__label">Reklama</span>';
+    $label = ($type === 'image') ? '' : '<span class="ad-slot__label">Reklama</span>';
 
     if (!$slot || empty($slot['content'])) {
         return '<div class="' . $cls . '" data-ad-slot="' . htmlspecialchars($slot_id) . '" aria-hidden="true">' . $label . '</div>';
