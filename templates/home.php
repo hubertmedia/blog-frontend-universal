@@ -130,7 +130,7 @@ include __DIR__ . '/header.php';
                 </div>
                 <a href="<?= SITE_URL ?>/artykul/<?= rawurlencode($featured['slug']) ?>/"
                    class="btn btn--primary">
-                    Czytaj analizę <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                    Przeczytaj <i class="fas fa-arrow-right" aria-hidden="true"></i>
                 </a>
             </div>
         </div>
