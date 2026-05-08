@@ -1,7 +1,8 @@
 <?php
 require_once __DIR__ . '/config.php';
 
-define('CACHE_DIR', '/tmp/blogcasha_cache/');
+// Dynamiczny folder cache na podstawie nazwy domeny, aby uniknąć mieszania danych
+define('CACHE_DIR', '/tmp/cms_cache_' . preg_replace('/[^a-z0-9]/', '_', SITE_NAME) . '/');
 define('CACHE_TTL', 60);
 
 function _cms_cache_get(string $key): ?array {
