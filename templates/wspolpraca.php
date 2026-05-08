@@ -4,6 +4,7 @@ require_once __DIR__ . '/../includes/api.php';
 require_once __DIR__ . '/../includes/helpers.php';
 
 $data = fetch_settings();
+$contact_email = !empty($data['contact_email']) ? $data['contact_email'] : CONTACT_EMAIL;
 $s = $data['pages']['wspolpraca_structured'] ?? [];
 
 // Fallback values
@@ -119,9 +120,9 @@ include __DIR__ . '/header.php';
             <div class="contact-simple">
                 <h2 class="section__title section__title--center"><?= htmlspecialchars($s['contact_title'] ?? 'Skontaktuj się z nami') ?></h2>
                 <p class="contact-simple__sub"><?= htmlspecialchars($s['contact_sub'] ?? 'Odpowiadamy w ciągu 24 godzin w dni robocze.') ?></p>
-                <a href="mailto:<?= CONTACT_EMAIL ?>" class="contact-simple__email">
+                <a href="mailto:<?= htmlspecialchars($contact_email) ?>" class="contact-simple__email">
                     <span class="contact-simple__email-icon"><i class="fas fa-envelope"></i></span>
-                    <span><?= CONTACT_EMAIL ?></span>
+                    <span><?= htmlspecialchars($contact_email) ?></span>
                 </a>
                 <div class="contact-simple__features">
                     <div><i class="fas fa-check-circle"></i> <?= htmlspecialchars($s['contact_feat_1'] ?? 'Szybka odpowiedź') ?></div>

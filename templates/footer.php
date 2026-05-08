@@ -2,6 +2,8 @@
 $domain_meta = $domain_meta ?? [];
 $nav_cats    = $nav_cats ?? get_nav_categories();
 $site_tagline = $domain_meta['description'] ?? SITE_DESC;
+$settings_data = function_exists('fetch_settings') ? fetch_settings() : [];
+$contact_email = !empty($settings_data['contact_email']) ? $settings_data['contact_email'] : CONTACT_EMAIL;
 ?>
     </main>
 
@@ -57,7 +59,7 @@ $site_tagline = $domain_meta['description'] ?? SITE_DESC;
                     <li><a href="<?= SITE_URL ?>/">Strona główna</a></li>
                     <li><a href="<?= SITE_URL ?>/wspolpraca/">Współpraca i reklama</a></li>
                     <li><a href="<?= SITE_URL ?>/polityka-prywatnosci/">Polityka prywatności</a></li>
-                    <li><a href="mailto:<?= CONTACT_EMAIL ?>">Kontakt</a></li>
+                    <li><a href="mailto:<?= htmlspecialchars($contact_email) ?>">Kontakt</a></li>
                     <li><a href="<?= SITE_URL ?>/sitemap.xml">Sitemap XML</a></li>
                 </ul>
             </div>
@@ -65,7 +67,7 @@ $site_tagline = $domain_meta['description'] ?? SITE_DESC;
             <div class="footer__disclaimer">
                 <h3 class="footer__heading">Disclaimer</h3>
                 <p>Materiały publikowane na <?= SITE_NAME ?> mają wyłącznie charakter informacyjno-edukacyjny i nie stanowią rekomendacji inwestycyjnych w rozumieniu Ustawy z dnia 29 lipca 2005 r. o obrocie instrumentami finansowymi.</p>
-                <p style="margin-top:.75rem">Administrator: <a href="mailto:<?= CONTACT_EMAIL ?>"><?= CONTACT_EMAIL ?></a></p>
+                <p style="margin-top:.75rem">Administrator: <a href="mailto:<?= htmlspecialchars($contact_email) ?>"><?= htmlspecialchars($contact_email) ?></a></p>
             </div>
         </div>
 
@@ -75,7 +77,7 @@ $site_tagline = $domain_meta['description'] ?? SITE_DESC;
                     &copy; <?= date('Y') ?> <a href="<?= SITE_URL ?>/"><?= SITE_NAME ?></a>
                     &nbsp;|&nbsp; <a href="<?= SITE_URL ?>/polityka-prywatnosci/">Polityka prywatności</a>
                     &nbsp;|&nbsp; <a href="<?= SITE_URL ?>/wspolpraca/">Współpraca</a>
-                    &nbsp;|&nbsp; <a href="mailto:<?= CONTACT_EMAIL ?>">Kontakt</a>
+                    &nbsp;|&nbsp; <a href="mailto:<?= htmlspecialchars($contact_email) ?>">Kontakt</a>
                 </p>
             </div>
         </div>
