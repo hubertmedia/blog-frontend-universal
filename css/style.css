@@ -603,10 +603,11 @@ input, textarea, select { font: inherit; }
   letter-spacing: 0.05em;
   overflow: hidden;
 }
-.ad-slot::after { content: ''; }
-.ad-slot--leaderboard { height: 90px; max-width: 728px; margin-inline: auto; }
-.ad-slot--sidebar { height: 250px; width: 100%; }
-.ad-slot--article-top, .ad-slot--article-bottom, .ad-slot--article-mid { height: 90px; margin-block: 2rem; }
+.ad-slot:empty, .ad-slot[data-ad-slot]:empty { display: none !important; }
+.ad-slot--leaderboard { min-height: 90px; max-width: 728px; margin-inline: auto; }
+.ad-slot--sidebar { min-height: 250px; width: 100%; }
+.ad-slot--article-top, .ad-slot--article-bottom, .ad-slot--article-mid { min-height: 0; margin-block: 2rem; }
+.ad-slot:not(:empty) { min-height: 90px; }
 
 /* ── Sidebar ──────────────────────────────────────────────── */
 .sidebar { display: flex; flex-direction: column; gap: 1.5rem; }
