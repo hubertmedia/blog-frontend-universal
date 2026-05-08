@@ -139,7 +139,7 @@ include __DIR__ . '/header.php';
 <?php endif; ?>
 
 <!-- Polecane Artykuły (Z CMS: ?featured=1) -->
-<?php $featured_api = fetch_featured_posts(3); ?>
+<?php $featured_api = fetch_featured_posts(6); ?>
 <?php if (!empty($featured_api)): ?>
 <section class="section section--featured-alt" aria-labelledby="featured-alt-h" style="background:#f8fafc; border-bottom:1px solid #e2e8f0;">
     <div class="container">
