@@ -5,7 +5,7 @@ require_once __DIR__ . '/../includes/helpers.php';
 
 $domain_meta   = get_domain_meta();
 $page_title    = 'Współpraca i reklama | ' . SITE_NAME;
-$page_desc     = 'Dotrzyj do świadomych finansowo Polaków. Oferta artykułów sponsorowanych i linków na blogcasha.pl.';
+$page_desc     = 'Dotrzyj do świadomych finansowo Polaków. Oferta artykułów sponsorowanych i linków na ' . SITE_NAME . '.';
 $canonical_url = SITE_URL . '/wspolpraca/';
 $extra_head    = schema_breadcrumb([
     ['name'=>'Strona główna','url'=> SITE_URL.'/'],
@@ -22,7 +22,7 @@ include __DIR__ . '/header.php';
                 Dotarcie do <span class="highlight">świadomych finansowo</span> Polaków
             </h1>
             <p class="collab-hero__sub">
-                blogcasha.pl to niszowy serwis finansowy skupiający czytelników aktywnie zainteresowanych
+                <?= SITE_NAME ?> to niszowy serwis finansowy skupiający czytelników aktywnie zainteresowanych
                 inwestycjami, kredytami, kryptowalutami i planowaniem finansowym. Najwyższe CPC w branży.
             </p>
             <a href="#kontakt" class="btn btn--primary btn--lg">
@@ -53,7 +53,7 @@ include __DIR__ . '/header.php';
 <section class="usp-section" aria-labelledby="usp-h">
     <div class="container">
         <h2 class="section__title section__title--center" id="usp-h">
-            Dlaczego <span class="section__title-accent">blogcasha.pl</span>?
+            Dlaczego <span class="section__title-accent"><?= SITE_NAME ?></span>?
         </h2>
         <div class="usp-grid">
             <div class="usp-card">
@@ -154,9 +154,9 @@ include __DIR__ . '/header.php';
                 Skontaktuj <span class="section__title-accent">się z nami</span>
             </h2>
             <p class="contact-simple__sub">Odpowiadamy w ciągu 24 godzin w dni robocze.</p>
-            <a href="mailto:bok@mediaplanet.pl" class="contact-simple__email">
+            <a href="mailto:<?= CONTACT_EMAIL ?>" class="contact-simple__email">
                 <span class="contact-simple__email-icon"><i class="fas fa-envelope"></i></span>
-                <span>bok@mediaplanet.pl</span>
+                <span><?= CONTACT_EMAIL ?></span>
             </a>
             <div class="contact-simple__features">
                 <div><i class="fas fa-check-circle"></i> Szybka odpowiedź</div>
@@ -166,7 +166,5 @@ include __DIR__ . '/header.php';
         </div>
     </div>
 </section>
-
-<?php endif; ?>
 
 <?php include __DIR__ . '/footer.php'; ?>
