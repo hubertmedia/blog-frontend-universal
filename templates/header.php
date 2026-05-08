@@ -64,7 +64,13 @@ $nav_cats      = get_nav_categories();
             <div class="container header__inner">
                 <a class="header__logo" href="<?= SITE_URL ?>/" aria-label="<?= SITE_NAME ?> – strona główna">
                     <span class="logo__icon"><i class="fas fa-coins" aria-hidden="true"></i></span>
-                    <span class="logo__text">blogcasha<span class="logo__tld">.pl</span></span>
+                    <span class="logo__text">
+                        <?php 
+                        $domain_parts = explode('.', SITE_NAME);
+                        echo htmlspecialchars($domain_parts[0] ?? SITE_NAME);
+                        if (isset($domain_parts[1])) echo '<span class="logo__tld">.' . htmlspecialchars($domain_parts[1]) . '</span>';
+                        ?>
+                    </span>
                 </a>
 
                 <nav class="header__nav" id="mainNav" aria-label="Nawigacja główna">

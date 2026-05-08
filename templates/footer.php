@@ -8,7 +8,7 @@ $site_tagline = $domain_meta['description'] ?? SITE_DESC;
     <div class="disclaimer-bar">
         <div class="container">
             <i class="fas fa-triangle-exclamation" aria-hidden="true"></i>
-            <p>Treści na <strong>blogcasha.pl</strong> mają charakter informacyjny i nie stanowią porady finansowej, inwestycyjnej ani prawnej. Przed podjęciem decyzji finansowych skonsultuj się z licencjonowanym doradcą. Inwestowanie wiąże się z ryzykiem utraty środków.</p>
+            <p>Treści na <strong><?= SITE_NAME ?></strong> mają charakter informacyjny i nie stanowią porady finansowej, inwestycyjnej ani prawnej. Przed podjęciem decyzji finansowych skonsultuj się z licencjonowanym doradcą. Inwestowanie wiąże się z ryzykiem utraty środków.</p>
         </div>
     </div>
 
@@ -24,7 +24,13 @@ $site_tagline = $domain_meta['description'] ?? SITE_DESC;
             <div class="footer__brand">
                 <a class="footer__logo" href="<?= SITE_URL ?>/">
                     <i class="fas fa-coins" aria-hidden="true"></i>
-                    <span>blogcasha<strong>.pl</strong></span>
+                    <span>
+                        <?php 
+                        $domain_parts = explode('.', SITE_NAME);
+                        echo htmlspecialchars($domain_parts[0] ?? SITE_NAME);
+                        if (isset($domain_parts[1])) echo '<strong>.' . htmlspecialchars($domain_parts[1]) . '</strong>';
+                        ?>
+                    </span>
                 </a>
                 <p class="footer__tagline"><?= htmlspecialchars($site_tagline) ?></p>
                 <div class="footer__social">
@@ -59,7 +65,7 @@ $site_tagline = $domain_meta['description'] ?? SITE_DESC;
 
             <div class="footer__disclaimer">
                 <h3 class="footer__heading">Disclaimer</h3>
-                <p>Materiały publikowane na blogcasha.pl mają wyłącznie charakter informacyjno-edukacyjny i nie stanowią rekomendacji inwestycyjnych w rozumieniu Ustawy z dnia 29 lipca 2005 r. o obrocie instrumentami finansowymi.</p>
+                <p>Materiały publikowane na <?= SITE_NAME ?> mają wyłącznie charakter informacyjno-edukacyjny i nie stanowią rekomendacji inwestycyjnych w rozumieniu Ustawy z dnia 29 lipca 2005 r. o obrocie instrumentami finansowymi.</p>
                 <p style="margin-top:.75rem">Administrator: <a href="mailto:<?= CONTACT_EMAIL ?>"><?= CONTACT_EMAIL ?></a></p>
             </div>
         </div>

@@ -262,7 +262,7 @@ include __DIR__ . '/header.php';
 <section class="home-disclaimer">
     <div class="container">
         <i class="fas fa-info-circle" aria-hidden="true"></i>
-        <p>Treści na <strong>blogcasha.pl</strong> mają charakter informacyjny i nie stanowią porady finansowej. Przed podjęciem decyzji inwestycyjnych lub kredytowych skonsultuj się z licencjonowanym doradcą finansowym. Inwestowanie wiąże się z ryzykiem utraty części lub całości środków.</p>
+        <p>Treści na <strong><?= SITE_NAME ?></strong> mają charakter informacyjny i nie stanowią porady finansowej. Przed podjęciem decyzji inwestycyjnych lub kredytowych skonsultuj się z licencjonowanym doradcą finansowym. Inwestowanie wiąże się z ryzykiem utraty części lub całości środków.</p>
     </div>
 </section>
 
