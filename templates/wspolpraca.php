@@ -26,7 +26,7 @@ $prices = [
 
 $features = [
     'sponsored' => !empty($s['features']['sponsored']) ? explode("\n", $s['features']['sponsored']) : ['1 artykuł dofollow', 'Oznaczony jako sponsorowany', 'Publikacja w 48h', 'Wieczysta publikacja'],
-    'premium'   => !empty($s['features']['premium'])   ? explode("\n", $s['features']['premium'])   : ['1 artykuł bez oznaczenia', '2 linki dofollow', 'Priorytetowa obsługa', 'Wieczysta publikacja'],
+    'premium'   => !empty($s['features']['premium'])   ? explode("\n", $s['features']['premium'])   : ['1 artykuł partnerski', '2 linki dofollow', 'Ekspercka redakcja i korekta', 'Wieczysta publikacja'],
     'link'      => !empty($s['features']['link'])      ? explode("\n", $s['features']['link'])      : ['Osadzenie w istniejącym tekście', 'Dofollow', 'Realizacja 24h', 'Wieczyste'],
     'package'   => !empty($s['features']['package'])   ? explode("\n", $s['features']['package'])   : ['5 artykułów/miesiąc', 'Raport miesięczny', 'Dedykowany opiekun', 'Rabat pakietowy']
 ];
