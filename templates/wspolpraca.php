@@ -44,6 +44,7 @@ include __DIR__ . '/header.php';
                 <p class="collab-hero__sub"><?= htmlspecialchars($hero_sub) ?></p>
                 <a href="#kontakt" class="btn btn--primary btn--lg"><i class="fas fa-envelope"></i> Napisz do nas</a>
             </div>
+            <?php if (!empty($s['show_stats'])): ?>
             <div class="collab-hero__stats">
                 <?php foreach($stats as $st): ?>
                 <div class="stat-card">
@@ -52,6 +53,7 @@ include __DIR__ . '/header.php';
                 </div>
                 <?php endforeach; ?>
             </div>
+            <?php endif; ?>
         </div>
     </section>
 
