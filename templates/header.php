@@ -63,7 +63,6 @@ $nav_cats      = get_nav_categories();
         <div class="header__main">
             <div class="container header__inner">
                 <a class="header__logo" href="<?= SITE_URL ?>/" aria-label="<?= SITE_NAME ?> – strona główna">
-                    <span class="logo__icon"><i class="fas fa-coins" aria-hidden="true"></i></span>
                     <span class="logo__text">
                         <?php 
                         $domain_parts = explode('.', SITE_NAME);

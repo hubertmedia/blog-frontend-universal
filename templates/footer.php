@@ -23,7 +23,6 @@ $site_tagline = $domain_meta['description'] ?? SITE_DESC;
         <div class="container footer__inner">
             <div class="footer__brand">
                 <a class="footer__logo" href="<?= SITE_URL ?>/">
-                    <i class="fas fa-coins" aria-hidden="true"></i>
                     <span>
                         <?php 
                         $domain_parts = explode('.', SITE_NAME);
