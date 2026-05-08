@@ -35,7 +35,7 @@ $nav_cats      = get_nav_categories();
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Lora:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600;700&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
-    <link rel="stylesheet" href="<?= SITE_URL ?>/css/style.css">
+    <link rel="stylesheet" href="<?= SITE_URL ?>/css/style.css?v=<?= filemtime(__DIR__ . '/../css/style.css') ?>">
     <link rel="icon" href="<?= SITE_URL ?>/img/favicon.ico" type="image/x-icon">
 
     <?= $extra_head ?? '' ?>
