@@ -18,7 +18,7 @@ $extra_head    = schema_breadcrumb([
 include __DIR__ . '/header.php';
 ?>
 
-<div class="cms-page-wrapper">
+<main id="main-content">
     <?php if (!empty($page_data['content'])): ?>
         <?= str_replace('{{SITE_NAME}}', SITE_NAME, str_replace('{{CONTACT_EMAIL}}', CONTACT_EMAIL, $page_data['content'])) ?>
     <?php else: ?>
@@ -27,6 +27,6 @@ include __DIR__ . '/header.php';
             <p>Treść strony jest właśnie konfigurowana w CMS. Zapraszamy za chwilę.</p>
         </div>
     <?php endif; ?>
-</div>
+</main>
 
 <?php include __DIR__ . '/footer.php'; ?>
