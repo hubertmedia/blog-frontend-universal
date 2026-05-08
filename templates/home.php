@@ -138,6 +138,12 @@ include __DIR__ . '/header.php';
 </section>
 <?php endif; ?>
 
+<div class="site-promo-banner" style="padding-block: 2rem;">
+    <div class="container">
+        <?= render_ad_slot('homepage-leaderboard') ?>
+    </div>
+</div>
+
 <!-- Polecane Artykuły (Z CMS: ?featured=1) -->
 <?php $featured_api = fetch_featured_posts(6); ?>
 <?php if (!empty($featured_api)): ?>
@@ -189,12 +195,6 @@ include __DIR__ . '/header.php';
     </div>
 </section>
 
-<!-- Ad slot -->
-<div class="ad-section">
-    <div class="container">
-        <?= render_ad_slot('homepage-leaderboard') ?>
-    </div>
-</div>
 
 <!-- Popularne kategorie -->
 <?php $home_cats = $nav_cats ?? get_nav_categories(); ?>
