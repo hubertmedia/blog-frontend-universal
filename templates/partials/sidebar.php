@@ -34,17 +34,6 @@ $nav_cats = $nav_cats ?? get_nav_categories();
 </div>
 <?php endif; ?>
 
-<div class="widget widget--calculator">
-    <h3 class="widget__title"><i class="fas fa-calculator"></i> Kalkulatory</h3>
-    <p class="widget__calc-text">Interaktywne kalkulatory finansowe – wkrótce dostępne.</p>
-    <ul class="widget__calc-list">
-        <li><i class="fas fa-percent"></i> Kalkulator odsetek</li>
-        <li><i class="fas fa-home"></i> Kalkulator kredytu hipotecznego</li>
-        <li><i class="fas fa-piggy-bank"></i> Kalkulator oszczędności</li>
-        <li><i class="fas fa-chart-pie"></i> Kalkulator inwestycji</li>
-    </ul>
-    <span class="widget__badge-soon">Wkrótce</span>
-</div>
 
 <div class="widget widget--disclaimer">
     <h3 class="widget__title"><i class="fas fa-triangle-exclamation"></i> Ważna informacja</h3>
