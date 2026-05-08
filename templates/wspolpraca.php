@@ -54,6 +54,9 @@ include __DIR__ . '/header.php';
                 </div>
                 <?php endforeach; ?>
             </div>
+            <div style="text-align:right; font-size: 0.75rem; color: var(--text-muted); margin-top: 0.5rem;">
+                Zaktualizowano: <?= htmlspecialchars($s['stats_updated'] ?? date('Y-m-d')) ?>
+            </div>
             <?php endif; ?>
         </div>
     </section>
