@@ -594,7 +594,6 @@ input, textarea, select { font: inherit; }
 /* ── Ad Slots ─────────────────────────────────────────────── */
 .ad-section { padding-block: 1.25rem; }
 .ad-slot {
-  background: var(--color-border);
   border-radius: var(--radius-sm);
   display: flex; align-items: center; justify-content: center;
   color: var(--color-text-muted);
@@ -602,8 +601,9 @@ input, textarea, select { font: inherit; }
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
+  overflow: hidden;
 }
-.ad-slot::after { content: 'Reklama'; }
+.ad-slot::after { content: ''; }
 .ad-slot--leaderboard { height: 90px; max-width: 728px; margin-inline: auto; }
 .ad-slot--sidebar { height: 250px; width: 100%; }
 .ad-slot--article-top, .ad-slot--article-bottom, .ad-slot--article-mid { height: 90px; margin-block: 2rem; }
