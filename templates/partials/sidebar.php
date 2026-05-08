@@ -48,7 +48,7 @@ $nav_cats = $nav_cats ?? get_nav_categories();
 
 <div class="widget widget--disclaimer">
     <h3 class="widget__title"><i class="fas fa-triangle-exclamation"></i> Ważna informacja</h3>
-    <p>Artykuły na blogcasha.pl mają charakter informacyjny i <strong>nie stanowią porady finansowej</strong>. Przed podjęciem decyzji skonsultuj się z doradcą.</p>
+    <p>Artykuły na <?= SITE_NAME ?> mają charakter informacyjny i <strong>nie stanowią porady finansowej</strong>. Przed podjęciem decyzji skonsultuj się z doradcą.</p>
 </div>
 
 <div class="widget widget--ad">

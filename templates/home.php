@@ -202,9 +202,9 @@ include __DIR__ . '/header.php';
 <section class="section section--cats-dark" aria-labelledby="cats-h">
     <div class="container">
         <h2 class="section__title section__title--light" id="cats-h">
-            Kategorie <span class="section__title-accent">finansowe</span>
+            Kategorie <span class="section__title-accent">artykułów</span>
         </h2>
-        <div class="categories-tiles">
+        <div class="categories-tiles" style="margin-top:2rem;">
             <?php foreach ($home_cats as $cat): ?>
             <a href="<?= SITE_URL ?>/kategoria/<?= htmlspecialchars($cat['slug']) ?>/"
                class="cat-tile" style="--tile-color:<?= htmlspecialchars($cat['color']) ?>">
@@ -258,12 +258,5 @@ include __DIR__ . '/header.php';
 </nav>
 <?php endif; ?>
 
-<!-- Disclaimer finansowy -->
-<section class="home-disclaimer">
-    <div class="container">
-        <i class="fas fa-info-circle" aria-hidden="true"></i>
-        <p>Treści na <strong><?= SITE_NAME ?></strong> mają charakter informacyjny i nie stanowią porady finansowej. Przed podjęciem decyzji inwestycyjnych lub kredytowych skonsultuj się z licencjonowanym doradcą finansowym. Inwestowanie wiąże się z ryzykiem utraty części lub całości środków.</p>
-    </div>
-</section>
 
 <?php include __DIR__ . '/footer.php'; ?>
