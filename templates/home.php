@@ -54,7 +54,6 @@ $total_pages = (int)($data['pages'] ?? 1);
 
 $featured   = $posts[0] ?? null;
 $ticker     = array_slice($posts, 0, 3);
-// Gdy jest mało artykułów, grid pokazuje wszystkie (łącznie z wyróżnionym)
 $grid_posts = count($posts) > 1 ? array_slice($posts, 1, 6) : $posts;
 $more_posts = array_slice($posts, 7);
 
@@ -63,6 +62,16 @@ $page_desc     = SITE_DESC;
 $page_image    = fix_image_url($featured['featured_image'] ?? '') ?: SITE_URL . '/img/og-default.png';
 $canonical_url = SITE_URL . '/';
 $extra_head    = schema_website();
+
+$site_settings = fetch_settings();
+$sections_config = $site_settings['sections'] ?? [];
+
+$is_visible = function($key) use ($sections_config) {
+    return !isset($sections_config[$key]) || !isset($sections_config[$key]['visible']) || $sections_config[$key]['visible'];
+};
+$section_name = function($key, $default) use ($sections_config) {
+    return (!empty($sections_config[$key]['name'])) ? $sections_config[$key]['name'] : $default;
+};
 
 include __DIR__ . '/header.php';
 ?>
@@ -88,135 +97,171 @@ include __DIR__ . '/header.php';
 </div>
 <?php endif; ?>
 
-<!-- Main Featured -->
-<?php if ($featured): ?>
-<section class="featured-section" aria-label="Wyróżniony artykuł">
-    <div class="container">
-        <div class="featured-article">
-            <div class="featured-article__img-wrap">
-                <?php if (!empty($featured['featured_image'])): ?>
-                <img src="<?= htmlspecialchars(fix_image_url($featured['featured_image'])) ?>"
-                     alt="<?= htmlspecialchars($featured['title']) ?>"
-                     width="1200" height="630" loading="eager" fetchpriority="high"
-                     class="featured-article__img">
-                <?php else: ?>
-                <div class="featured-article__img featured-article__img--placeholder"
-                     style="background:linear-gradient(135deg,<?= category_color($featured['category_name']??'') ?> 0%,#0f172a 100%)">
-                    <i class="fas <?= category_icon($featured['category_name']??'') ?>" aria-hidden="true"></i>
+<?php
+// Define available sections
+$render_queue = [
+    'hero' => function() use ($featured, $is_visible, $section_name, $site_settings) {
+        if (!$featured || !$is_visible('hero')) return;
+        ?>
+        <section class="featured-section" aria-label="<?= htmlspecialchars($section_name('hero', 'Wyróżniony')) ?>">
+            <div class="container">
+                <div class="featured-article">
+                    <div class="featured-article__img-wrap">
+                        <?php if (!empty($featured['featured_image'])): ?>
+                        <img src="<?= htmlspecialchars(fix_image_url($featured['featured_image'])) ?>"
+                             alt="<?= htmlspecialchars($featured['title']) ?>"
+                             width="1200" height="630" loading="eager" fetchpriority="high"
+                             class="featured-article__img">
+                        <?php else: ?>
+                        <div class="featured-article__img featured-article__img--placeholder"
+                             style="background:linear-gradient(135deg,<?= category_color($featured['category_name']??'') ?> 0%,#0f172a 100%)">
+                            <i class="fas <?= category_icon($featured['category_name']??'') ?>" aria-hidden="true"></i>
+                        </div>
+                        <?php endif; ?>
+                    </div>
+                    <div class="featured-article__body">
+                        <div class="featured-article__gold-line" aria-hidden="true"></div>
+                        <a href="<?= SITE_URL ?>/kategoria/<?= category_slug($featured['category_name']??'') ?>/"
+                           class="badge" style="--badge-color:<?= category_color($featured['category_name']??'') ?>">
+                            <i class="fas <?= category_icon($featured['category_name']??'') ?>" aria-hidden="true"></i>
+                            <?= htmlspecialchars($featured['category_name'] ?? '') ?>
+                        </a>
+                        <h1 class="featured-article__title">
+                            <a href="<?= SITE_URL ?>/artykul/<?= rawurlencode($featured['slug']) ?>/">
+                                <?= htmlspecialchars($featured['title']) ?>
+                            </a>
+                        </h1>
+                        <p class="featured-article__excerpt">
+                            <?= htmlspecialchars(truncate($featured['excerpt'] ?? '', 220)) ?>
+                        </p>
+                        <div class="featured-article__meta">
+                            <time datetime="<?= format_date_iso($featured['published_at']) ?>">
+                                <i class="fas fa-calendar" aria-hidden="true"></i>
+                                <?= format_date($featured['published_at']) ?>
+                            </time>
+                            <span><i class="fas fa-clock" aria-hidden="true"></i> <?= reading_time($featured['content'] ?? '') ?> min czytania</span>
+                        </div>
+                        <a href="<?= SITE_URL ?>/artykul/<?= rawurlencode($featured['slug']) ?>/"
+                           class="btn btn--primary">
+                            Przeczytaj <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                        </a>
+                    </div>
                 </div>
-                <?php endif; ?>
             </div>
-            <div class="featured-article__body">
-                <div class="featured-article__gold-line" aria-hidden="true"></div>
-                <a href="<?= SITE_URL ?>/kategoria/<?= category_slug($featured['category_name']??'') ?>/"
-                   class="badge" style="--badge-color:<?= category_color($featured['category_name']??'') ?>">
-                    <i class="fas <?= category_icon($featured['category_name']??'') ?>" aria-hidden="true"></i>
-                    <?= htmlspecialchars($featured['category_name'] ?? '') ?>
-                </a>
-                <h1 class="featured-article__title">
-                    <a href="<?= SITE_URL ?>/artykul/<?= rawurlencode($featured['slug']) ?>/">
-                        <?= htmlspecialchars($featured['title']) ?>
+        </section>
+
+        <!-- Polecane Artykuły (Z CMS: ?featured=1) -->
+        <?php $featured_api = fetch_featured_posts(6); ?>
+        <?php if (!empty($featured_api)): ?>
+        <section class="section section--featured-alt" style="background:#f8fafc; border-bottom:1px solid #e2e8f0; margin-top:-2rem; padding-top:4rem;">
+            <div class="container">
+                <div class="section__header">
+                    <h2 class="section__title">
+                        <?= htmlspecialchars($section_name('hero', 'Polecane')) ?> <span class="section__title-accent">artykuły</span>
+                    </h2>
+                </div>
+                <div class="posts-grid posts-grid--3">
+                    <?php foreach ($featured_api as $post): ?>
+                    <?php include __DIR__ . '/partials/post-card.php'; ?>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        </section>
+        <?php endif; ?>
+        <?php
+    },
+    'latest' => function() use ($grid_posts, $is_visible, $section_name, $posts) {
+        if (!$is_visible('latest')) return;
+        ?>
+        <section class="section" aria-labelledby="latest-h">
+            <div class="container">
+                <div class="section__header">
+                    <h2 class="section__title" id="latest-h">
+                        <?= htmlspecialchars($section_name('latest', 'Najnowsze')) ?> <span class="section__title-accent">artykuły</span>
+                    </h2>
+                </div>
+                <div class="posts-layout">
+                    <div class="posts-grid">
+                        <?php foreach ($grid_posts as $post): ?>
+                        <?php include __DIR__ . '/partials/post-card.php'; ?>
+                        <?php endforeach; ?>
+                        <?php if (empty($grid_posts)): ?>
+                        <div class="empty-state" style="grid-column:1/-1">
+                            <i class="fas fa-chart-line"></i>
+                            <h3>Artykuły pojawią się wkrótce</h3>
+                        </div>
+                        <?php endif; ?>
+                    </div>
+                    <aside class="sidebar">
+                        <?php
+                        $sidebar_posts = array_slice($posts, 0, 5);
+                        include __DIR__ . '/partials/sidebar.php';
+                        ?>
+                    </aside>
+                </div>
+            </div>
+        </section>
+        <?php
+    },
+    'categories' => function() use ($is_visible, $section_name) {
+        if (!$is_visible('categories')) return;
+        $home_cats = get_nav_categories();
+        if (empty($home_cats)) return;
+        ?>
+        <section class="section section--cats-dark" aria-labelledby="cats-h">
+            <div class="container">
+                <h2 class="section__title section__title--light" id="cats-h">
+                    <?= htmlspecialchars($section_name('categories', 'Kategorie')) ?> <span class="section__title-accent">artykułów</span>
+                </h2>
+                <div class="categories-tiles" style="margin-top:2rem;">
+                    <?php foreach ($home_cats as $cat): ?>
+                    <a href="<?= SITE_URL ?>/kategoria/<?= htmlspecialchars($cat['slug']) ?>/"
+                       class="cat-tile" style="--tile-color:<?= htmlspecialchars($cat['color']) ?>">
+                        <span class="cat-tile__icon"><i class="<?= htmlspecialchars($cat['icon']) ?>"></i></span>
+                        <span class="cat-tile__name"><?= htmlspecialchars($cat['name']) ?></span>
+                        <i class="fas fa-arrow-right cat-tile__arrow"></i>
                     </a>
-                </h1>
-                <p class="featured-article__excerpt">
-                    <?= htmlspecialchars(truncate($featured['excerpt'] ?? '', 220)) ?>
-                </p>
-                <div class="featured-article__meta">
-                    <time datetime="<?= format_date_iso($featured['published_at']) ?>">
-                        <i class="fas fa-calendar" aria-hidden="true"></i>
-                        <?= format_date($featured['published_at']) ?>
-                    </time>
-                    <span><i class="fas fa-clock" aria-hidden="true"></i> <?= reading_time($featured['content'] ?? '') ?> min czytania</span>
+                    <?php endforeach; ?>
                 </div>
-                <a href="<?= SITE_URL ?>/artykul/<?= rawurlencode($featured['slug']) ?>/"
-                   class="btn btn--primary">
-                    Przeczytaj <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                </a>
             </div>
-        </div>
-    </div>
-</section>
-<?php endif; ?>
-
-<div class="site-promo-banner" style="padding-block: 2rem;">
-    <div class="container">
-        <?= render_ad_slot('homepage-leaderboard') ?>
-    </div>
-</div>
-
-<!-- Polecane Artykuły (Z CMS: ?featured=1) -->
-<?php $featured_api = fetch_featured_posts(6); ?>
-<?php if (!empty($featured_api)): ?>
-<section class="section section--featured-alt" aria-labelledby="featured-alt-h" style="background:#f8fafc; border-bottom:1px solid #e2e8f0;">
-    <div class="container">
-        <div class="section__header">
-            <h2 class="section__title" id="featured-alt-h">
-                Polecane <span class="section__title-accent">artykuły</span>
-            </h2>
-            <p style="color:var(--color-text-muted); font-size:0.875rem;">Wyselekcjonowane treści przez naszą redakcję</p>
-        </div>
-        <div class="posts-grid posts-grid--3">
-            <?php foreach ($featured_api as $post): ?>
-            <?php include __DIR__ . '/partials/post-card.php'; ?>
-            <?php endforeach; ?>
-        </div>
-    </div>
-</section>
-<?php endif; ?>
-
-<!-- Najnowsze analizy -->
-<section class="section" aria-labelledby="latest-h">
-    <div class="container">
-        <div class="section__header">
-            <h2 class="section__title" id="latest-h">
-                Najnowsze <span class="section__title-accent">artykuły</span>
-            </h2>
-        </div>
-        <div class="posts-layout">
-            <div class="posts-grid">
-                <?php foreach ($grid_posts as $post): ?>
-                <?php include __DIR__ . '/partials/post-card.php'; ?>
-                <?php endforeach; ?>
-                <?php if (empty($grid_posts)): ?>
-                <div class="empty-state" style="grid-column:1/-1">
-                    <i class="fas fa-chart-line"></i>
-                    <h3>Artykuły pojawią się wkrótce</h3>
-                    <p>Trwa ładowanie treści z CMS. Sprawdź ponownie za chwilę.</p>
+        </section>
+        <?php
+    },
+    'newsletter' => function() use ($is_visible, $section_name) {
+        if (!$is_visible('newsletter')) return;
+        ?>
+        <section class="section newsletter-box" style="padding-block: 4rem;">
+            <div class="container">
+                <div style="background: var(--color-primary); border-radius: 2rem; padding: 3rem; color: white; display: flex; align-items: center; justify-content: space-between; gap: 2rem; flex-wrap: wrap;">
+                    <div style="flex: 1; min-width: 300px;">
+                        <h2 style="font-size: 2rem; margin-bottom: 0.5rem;"><?= htmlspecialchars($section_name('newsletter', 'Bądź na bieżąco')) ?></h2>
+                        <p style="opacity: 0.9; font-size: 1.1rem;">Zapisz się do newslettera i otrzymuj najlepsze treści prosto na e-mail.</p>
+                    </div>
+                    <form style="flex: 1; min-width: 300px; display: flex; gap: 0.5rem;">
+                        <input type="email" placeholder="Twój adres e-mail" required style="flex: 1; padding: 1rem 1.5rem; border-radius: 1rem; border: none; font-size: 1rem;">
+                        <button type="submit" class="btn" style="background: #0f172a; color: white;">Zapisz się</button>
+                    </form>
                 </div>
-                <?php endif; ?>
             </div>
-            <aside class="sidebar">
-                <?php
-                $sidebar_posts = array_slice($posts, 0, 5);
-                include __DIR__ . '/partials/sidebar.php';
-                ?>
-            </aside>
-        </div>
-    </div>
-</section>
+        </section>
+        <?php
+    }
+];
 
+// Sort sections based on order in config
+$order = [];
+foreach(['hero', 'latest', 'categories', 'newsletter'] as $key) {
+    $order[$key] = $sections_config[$key]['order'] ?? array_search($key, ['hero', 'latest', 'categories', 'newsletter']) + 1;
+}
+asort($order);
 
-<!-- Popularne kategorie -->
-<?php $home_cats = $nav_cats ?? get_nav_categories(); ?>
-<?php if (!empty($home_cats)): ?>
-<section class="section section--cats-dark" aria-labelledby="cats-h">
-    <div class="container">
-        <h2 class="section__title section__title--light" id="cats-h">
-            Kategorie <span class="section__title-accent">artykułów</span>
-        </h2>
-        <div class="categories-tiles" style="margin-top:2rem;">
-            <?php foreach ($home_cats as $cat): ?>
-            <a href="<?= SITE_URL ?>/kategoria/<?= htmlspecialchars($cat['slug']) ?>/"
-               class="cat-tile" style="--tile-color:<?= htmlspecialchars($cat['color']) ?>">
-                <span class="cat-tile__icon"><i class="<?= htmlspecialchars($cat['icon']) ?>"></i></span>
-                <span class="cat-tile__name"><?= htmlspecialchars($cat['name']) ?></span>
-                <i class="fas fa-arrow-right cat-tile__arrow"></i>
-            </a>
-            <?php endforeach; ?>
-        </div>
-    </div>
-</section>
-<?php endif; ?>
+// Render in order
+foreach ($order as $key => $pos) {
+    if (isset($render_queue[$key])) {
+        $render_queue[$key]();
+    }
+}
+?>
 
 <!-- Więcej artykułów -->
 <?php if (!empty($more_posts)): ?>
@@ -257,6 +302,5 @@ include __DIR__ . '/header.php';
     </div>
 </nav>
 <?php endif; ?>
-
 
 <?php include __DIR__ . '/footer.php'; ?>

@@ -36,7 +36,27 @@ $nav_cats      = get_nav_categories();
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Lora:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600;700&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
     <link rel="stylesheet" href="<?= SITE_URL ?>/css/style.css?v=<?= filemtime(__DIR__ . '/../css/style.css') ?>">
-    <link rel="icon" href="<?= SITE_URL ?>/img/favicon.ico" type="image/x-icon">
+    
+    <?php 
+    $site_settings = fetch_settings(); 
+    $site_colors = $site_settings['colors'] ?? [];
+    if (!empty($site_colors)): ?>
+    <style>
+        :root {
+            <?php if(!empty($site_colors['primary'])): ?>--color-primary: <?= $site_colors['primary'] ?>; --color-primary-rgb: <?= hexToRgb($site_colors['primary']) ?>;<?php endif; ?>
+            <?php if(!empty($site_colors['background'])): ?>--color-bg: <?= $site_colors['background'] ?>;<?php endif; ?>
+            <?php if(!empty($site_colors['text'])): ?>--color-text: <?= $site_colors['text'] ?>;<?php endif; ?>
+        }
+        <?php if(!empty($site_colors['header'])): ?>
+        .header__main { background-color: <?= $site_colors['header'] ?>; }
+        <?php endif; ?>
+        <?php if(!empty($site_colors['footer'])): ?>
+        .site-footer { background-color: <?= $site_colors['footer'] ?>; }
+        <?php endif; ?>
+    </style>
+    <?php endif; ?>
+
+    <link rel="icon" href="<?= !empty($site_settings['favicon']) ? (strpos($site_settings['favicon'], 'http') === 0 ? $site_settings['favicon'] : 'https://cms.hubertmedia.pl' . $site_settings['favicon']) : SITE_URL . '/img/favicon.ico' ?>" type="image/x-icon">
 
     <?= $extra_head ?? '' ?>
     <?= $domain_meta['header_scripts'] ?? '' ?>
@@ -59,13 +79,18 @@ $nav_cats      = get_nav_categories();
         <div class="header__main">
             <div class="container header__inner">
                 <a class="header__logo" href="<?= SITE_URL ?>/" aria-label="<?= SITE_NAME ?> – strona główna">
-                    <span class="logo__text">
-                        <?php 
-                        $domain_parts = explode('.', SITE_NAME);
-                        echo htmlspecialchars($domain_parts[0] ?? SITE_NAME);
-                        if (isset($domain_parts[1])) echo '<span class="logo__tld">.' . htmlspecialchars($domain_parts[1]) . '</span>';
-                        ?>
-                    </span>
+                    <?php if (!empty($site_settings['logo'])): ?>
+                        <img src="<?= strpos($site_settings['logo'], 'http') === 0 ? $site_settings['logo'] : 'https://cms.hubertmedia.pl' . $site_settings['logo'] ?>" 
+                             alt="<?= SITE_NAME ?>" style="max-height: 45px; width: auto; display: block;">
+                    <?php else: ?>
+                        <span class="logo__text">
+                            <?php 
+                            $domain_parts = explode('.', SITE_NAME);
+                            echo htmlspecialchars($domain_parts[0] ?? SITE_NAME);
+                            if (isset($domain_parts[1])) echo '<span class="logo__tld">.' . htmlspecialchars($domain_parts[1]) . '</span>';
+                            ?>
+                        </span>
+                    <?php endif; ?>
                 </a>
 
                 <nav class="header__nav" id="mainNav" aria-label="Nawigacja główna">

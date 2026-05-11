@@ -5,6 +5,20 @@ function slug_to_url(string $type, string $slug): string {
     return SITE_URL . '/' . $type . '/' . rawurlencode($slug) . '/';
 }
 
+function hexToRgb($hex) {
+    $hex = str_replace("#", "", $hex);
+    if(strlen($hex) == 3) {
+       $r = hexdec(substr($hex,0,1).substr($hex,0,1));
+       $g = hexdec(substr($hex,1,1).substr($hex,1,1));
+       $b = hexdec(substr($hex,2,1).substr($hex,2,1));
+    } else {
+       $r = hexdec(substr($hex,0,2));
+       $g = hexdec(substr($hex,2,2));
+       $b = hexdec(substr($hex,4,2));
+    }
+    return "$r, $g, $b";
+}
+
 function format_date(string $datetime): string {
     $months = [
         1=>'stycznia',2=>'lutego',3=>'marca',4=>'kwietnia',5=>'maja',6=>'czerwca',

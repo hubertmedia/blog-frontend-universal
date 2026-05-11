@@ -25,19 +25,30 @@ $contact_email = !empty($settings_data['contact_email']) ? $settings_data['conta
         <div class="container footer__inner">
             <div class="footer__brand">
                 <a class="footer__logo" href="<?= SITE_URL ?>/">
-                    <span>
-                        <?php 
-                        $domain_parts = explode('.', SITE_NAME);
-                        echo htmlspecialchars($domain_parts[0] ?? SITE_NAME);
-                        if (isset($domain_parts[1])) echo '<strong>.' . htmlspecialchars($domain_parts[1]) . '</strong>';
-                        ?>
-                    </span>
+                    <?php if (!empty($settings_data['logo'])): ?>
+                        <img src="<?= strpos($settings_data['logo'], 'http') === 0 ? $settings_data['logo'] : 'https://cms.hubertmedia.pl' . $settings_data['logo'] ?>" 
+                             alt="<?= SITE_NAME ?>" style="max-height: 40px; width: auto; display: block; margin-bottom: 1rem;">
+                    <?php else: ?>
+                        <span>
+                            <?php 
+                            $domain_parts = explode('.', SITE_NAME);
+                            echo htmlspecialchars($domain_parts[0] ?? SITE_NAME);
+                            if (isset($domain_parts[1])) echo '<strong>.' . htmlspecialchars($domain_parts[1]) . '</strong>';
+                            ?>
+                        </span>
+                    <?php endif; ?>
                 </a>
-                <p class="footer__tagline"><?= htmlspecialchars($site_tagline) ?></p>
+                <p class="footer__tagline"><?= !empty($settings_data['footer']['about_text']) ? htmlspecialchars($settings_data['footer']['about_text']) : htmlspecialchars($site_tagline) ?></p>
                 <div class="footer__social">
-                    <a href="#" aria-label="Facebook" class="social__link"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" aria-label="Twitter" class="social__link"><i class="fab fa-x-twitter"></i></a>
-                    <a href="#" aria-label="LinkedIn" class="social__link"><i class="fab fa-linkedin-in"></i></a>
+                    <?php if(!empty($settings_data['footer']['social_facebook'])): ?>
+                        <a href="<?= htmlspecialchars($settings_data['footer']['social_facebook']) ?>" aria-label="Facebook" class="social__link" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                    <?php endif; ?>
+                    <?php if(!empty($settings_data['footer']['social_twitter'])): ?>
+                        <a href="<?= htmlspecialchars($settings_data['footer']['social_twitter']) ?>" aria-label="Twitter" class="social__link" target="_blank"><i class="fab fa-x-twitter"></i></a>
+                    <?php endif; ?>
+                    <?php if(!empty($settings_data['footer']['social_instagram'])): ?>
+                        <a href="<?= htmlspecialchars($settings_data['footer']['social_instagram']) ?>" aria-label="Instagram" class="social__link" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <?php endif; ?>
                 </div>
             </div>
 
